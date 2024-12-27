@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full Form</title>
+    <script>
+        function submitForm() {
+            const form = document.getElementById('fullForm');
+            const formData = new FormData(form);
+            const params = new URLSearchParams(formData);
+            
+            fetch(`/full_form_result?${params.toString()}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('project_name_result').value = data.project_name || '';
+                    document.getElementById('requested_by_result').value = data.requested_by || '';
+                    document.getElementById('camera_name_result').value = data.camera_name || '';
+                    document.getElementById('product_type_result').value = data.product_type || '';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+
+            return false; // Prevent page reload
+        }
+    </script>
+</head>
+<body>
+    <h1>Enter Project and Camera Details</h1>
+    <form id="fullForm" onsubmit="return submitForm()">
+        <h2>Project Details</h2>
+        <label for="project_name">Project Name:</label>
+        <input type="text" id="project_name" name="project_name" required><br><br>
+        <label for="requested_by">Requested By:</label>
+        <input type="text" id="requested_by" name="requested_by" required><br><br>
+
+        <h2>Camera Details</h2>
+        <label for="camera_name">Camera Name:</label>
+        <input type="text" id="camera_name" name="camera_name" required><br><br>
+        <label for="product_type">Product Type:</label>
+        <input type="text" id="product_type" name="product_type" required><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <h2>Result</h2>
+    <form>
+        <label for="project_name_result">Project Name Result:</label>
+        <input type="text" id="project_name_result" readonly><br><br>
+        <label for="requested_by_result">Requested By Result:</label>
+        <input type="text" id="requested_by_result" readonly><br><br>
+        <label for="camera_name_result">Camera Name Result:</label>
+        <input type="text" id="camera_name_result" readonly><br><br>
+        <label for="product_type_result">Product Type Result:</label>
+        <input type="text" id="product_type_result" readonly><br><br>
+    </form>
+</body>
+</html>
+
+
